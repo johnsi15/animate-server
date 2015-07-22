@@ -1,0 +1,19 @@
+{
+  "name": "animate-server",
+  "version": "1.0.0",
+  "description": "un chat en tiempo real ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnsi15/animate-server.git"
+  },
+  "author": "John Andrey <jandreys15@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnsi15/animate-server/issues"
+  },
+  "homepage": "https://github.com/johnsi15/animate-server#readme"
+}
