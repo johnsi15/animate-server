@@ -1,6 +1,7 @@
 //"use strict";
 
 const http = require('http');
+const fs = require('fs');
 const port = process.env.PORT || 8080;
 
 const server = http.createServer();
@@ -11,7 +12,8 @@ server.on('request', onRequest);
 server.on('listening', onListening);
 
 function onRequest(req, res){
-	res.end("Hola io.js");
+	file = fs.readFileSync('public/index.html');
+	res.end(file);
 }
 
 function onListening(){
