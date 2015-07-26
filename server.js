@@ -13,12 +13,14 @@ server.on('request', onRequest);
 server.on('listening', onListening);
 
 function onRequest(req, res){
-	fileName = path.join(__dirname, 'public', 'index.html');
-    fs.readFile(fileName, function(err, file){
-    	if(err){
-    		return res.end(err.message);
-    	}
-		res.end(file);
+	index = path.join(__dirname, 'public', 'index.html');
+    res.setHeader('Content-Type', 'text/html');
+
+    rs = fs.createReadStream(index);
+    rs.pipe(res);
+
+    rs.on('error', function(){
+    	res.end(err.message);
     });
 }
 
