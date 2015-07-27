@@ -13,6 +13,20 @@ server.on('request', onRequest);
 server.on('listening', onListening);
 
 function onRequest(req, res){
+	url = req.url;
+	if(url===('/index') || url === '/'){
+		return serveIndex(res);
+	}
+
+	if(url === '/app.js'){
+		return serveApp(res);
+	}
+
+	res.statusCode = 404;
+	res.end('404 not found '+ url);
+}
+
+function serveIndex(res){
 	index = path.join(__dirname, 'public', 'index.html');
     res.setHeader('Content-Type', 'text/html');
 
@@ -20,6 +34,20 @@ function onRequest(req, res){
     rs.pipe(res);
 
     rs.on('error', function(){
+    	res.setHeader('Content-Type', 'text/html');
+    	res.end(err.message);
+    });
+}
+
+function serveApp(res){
+	app = path.join(__dirname, 'public', 'app.js');
+    res.setHeader('Content-Type', 'text/javascript');
+
+    rs = fs.createReadStream(app);
+    rs.pipe(res);
+
+    rs.on('error', function(){
+    	res.setHeader('Content-Type', 'text/javascript');
     	res.end(err.message);
     });
 }
