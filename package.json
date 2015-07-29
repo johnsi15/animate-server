@@ -18,5 +18,8 @@
   "homepage": "https://github.com/johnsi15/animate-server#readme",
   "dependencies": {
     "st": "^0.5.4"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.0"
   }
 }
