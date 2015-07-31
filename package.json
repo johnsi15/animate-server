@@ -19,9 +19,11 @@
   },
   "homepage": "https://github.com/johnsi15/animate-server#readme",
   "dependencies": {
+    "body": "^5.1.0",
     "course": "0.0.1",
     "st": "^0.5.4",
-    "webrtc2images": "^1.4.4"
+    "webrtc2images": "^1.4.4",
+    "xhr": "^2.0.3"
   },
   "devDependencies": {
     "browserify": "^11.0.0"
