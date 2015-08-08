@@ -1,40 +1,45 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const webrtc2Images = require ('webrtc2images');
-const xhr = require ('xhr');
+const xhr = require('xhr')
+const Webrtc2Images = require('webrtc2images')
 
-const rtc = new webrtc2Images({
-	width: 200,
-	height: 200,
-	frames: 10,
-	type: 'image/jpeg',
-	quality: 0.4,
-	interval: 200
-});
+const rtc = new Webrtc2Images({
+  width: 200,
+  height: 200,
+  frames: 10,
+  type: 'image/jpeg',
+  quality: 0.4,
+  interval: 200
+})
 
-rtc.startVideo(function(err){
+rtc.startVideo(function (err) {
+  if (err) return logError(err)
+})
 
-});
+const record = document.querySelector('#record')
 
-const record = document.querySelector('#record');
+record.addEventListener('click',  function (e) {
+  e.preventDefault()
 
-record.addEventListener('click', function(e){
-	e.preventDefault();
+  rtc.recordVideo(function (err, frames) {
+    if (err) return logError(err)
 
-	rtc.recordVideo(function(err, frames){
-		xhr({
-		uri: '/process',
-		method: 'post',
-		headers: {'Content-Type': 'application/json'},
-		body: JSON.stringify({ images: frames}),
-		}, function(err, res, body){
-			if(err) return logError(err);
+    xhr({
+      uri: '/process',
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ images: frames }),
+    }, function (err, res, body) {
+      if (err) return logError(err)
 
-			console.log(JSON.parse(body));
-		});
-		
-	});
+      console.log(JSON.parse(body))
+    })
 
-}, false);
+  })
+}, false)
+
+function logError (err) {
+  console.error(err)
+}
 },{"webrtc2images":2,"xhr":12}],2:[function(require,module,exports){
 var Streamer = require('./lib/streamer');
 var Recorder = require('./lib/recorder');

@@ -1,9 +1,8 @@
-//'use strict';
-
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const router = require('./router');
+'use strict';
 
 const port = process.env.PORT || 8080;
 
