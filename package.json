@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/johnsi15/animate-server#readme",
   "dependencies": {
+    "async": "^1.4.1",
     "body": "^5.1.0",
     "course": "0.0.1",
     "st": "^0.5.4",
