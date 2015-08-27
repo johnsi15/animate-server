@@ -1,10 +1,16 @@
-'use strcit';
-
-const async = require('async');
+const os = require('os')
+const fs = require('fs')
+const path = require('path')
+const uuid = require('uuid')
+const async = require('async')
+const dataURIBuffer = require('data-uri-to-buffer');
 const EventEmitter = require('events').EventEmitter
 
 module.exports = function (images) {
   events = new EventEmitter();
+  count = 0
+  baseName = uuid.v4()
+  tmpDir = os.tmpDir()
 
   async.series([
     decodeImages,
@@ -14,9 +20,21 @@ module.exports = function (images) {
   ], convertFinished);
 
   function decodeImages(done){
-    done();
+    async.eachSeries(images, decodeImage, done);
   }
 
+   function decodeImage(image, done){
+    nuevo = count++;
+    fileName = baseName+nuevo+'.jpg';
+    buffer = dataURIBuffer(image)
+    ws = fs.createWriteStream(path.join(tmpDir, fileName))
+
+    ws.on('error', done)
+      .end(buffer, done)
+
+    events.emit('log', 'Converting '+ fileName);
+  }
+ 
   function createVideo(done){
     done();
   }
